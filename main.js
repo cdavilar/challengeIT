@@ -112,42 +112,112 @@ jQuery(document)
 
         var inventario = new InventoryList();
         inventario.add("camisas");
-        console.info(inventario.getList());
+        console.info("PUNTO 2",inventario.getList());
 
 
-        
+
         /************************************************************************************************
          * CODIGO PUNTO 3
          ************************************************************************************************/
 
-                    
-            //TODO
-            function counts(teamA, teamB) {
 
-                var arrResult = [];
-
-                for (var i = 0; i < teamB.length ; i++){
-
-                    var totalPartidos = 0;
-
-                    for (var j = 0; j < teamA.length ; j++){
-                    
-                        if(teamA[j] <= teamB[i]){
-
-                            totalPartidos ++;
-
-                        }
-                    }  
-                    
-                    arrResult.push(totalPartidos);
+        //TODO
+        function counts(teamA, teamB) {
+            var arrResult = [];
+            for (var i = 0; i < teamB.length; i++) {
+                var totalPartidos = 0;
+                for (var j = 0; j < teamA.length; j++) {
+                    if (teamA[j] <= teamB[i]) {
+                        totalPartidos++;
+                    }
                 }
+                arrResult.push(totalPartidos);
+            }
+            return arrResult;
+        }
 
-                return arrResult;
+        let teamA = [2, 10, 5, 4, 8];
+        let teamB = [3, 1, 7, 8];
+        let result = counts(teamA, teamB);
+        console.log("PUNTO 3",result)
+
+
+        /************************************************************************************************
+         * CODIGO PUNTO 4
+         ************************************************************************************************/
+
+        /*
+         * Complete the 'processLogs' function below.
+         *
+         * The function is expected to return a STRING_ARRAY.
+         * The function accepts following parameters:
+         *  1. STRING_ARRAY logs
+         *  2. INTEGER threshold
+         * 
+         * FORMAT: "sender_user_id recipient_user_id amount"
+         */
+        function processLogs(logs, threshold) {
+
+            var totalTransactionsByUser = {};
+            var usersWithUmbral = [];
+
+            // 10 al 5 es el limite
+            if (logs.length > 100000) {
+                logs = logs.slice(0, n);
             }
 
-            let teamA = [2, 10, 5, 4, 8];
-            let teamB = [3, 1, 7, 8];
-            let result = counts(teamA, teamB);
-            console.log(result)
+            // si el umbral no esta dentro del rango del total de registros a operar, devolvemos el arreglo vacio
+            if(!(threshold >= 1 && threshold <= logs.length)){
+                return usersWithUmbral;
+            }
+
+            for (const key in logs) {
+                var log = logs[key];
+                let logArray = log.split(" ");
+
+                if (totalTransactionsByUser.hasOwnProperty(logArray[0])) {
+                    totalTransactionsByUser[logArray[0]]++;
+                } else {
+                    totalTransactionsByUser[logArray[0]] = 1;
+                }
+
+                if (logArray[0] !== logArray[1]) {
+                    if (totalTransactionsByUser.hasOwnProperty(logArray[1])) {
+                        totalTransactionsByUser[logArray[1]]++;
+                    } else {
+                        totalTransactionsByUser[logArray[1]] = 1;
+                    }
+                }
+
+            }
+
+            for (const property in totalTransactionsByUser) {
+                if (totalTransactionsByUser.hasOwnProperty(property)) {
+                    if (totalTransactionsByUser[property] >= threshold) {
+                        usersWithUmbral.push(property);
+                    }
+                }
+            }
+
+            usersWithUmbral.sort(function (a, b) {
+                return parseInt(a) - parseInt(b);
+            })
+
+            return usersWithUmbral;
+        }
+
+
+        var logs = [
+            "88 99 200",
+            "88 99 300",
+            "88 32 100",
+            "12 12 15",
+        ];
+
+        var threshold = 2;
+
+        var theResult = processLogs(logs, threshold);
+        console.log("PUNTO 4: ", theResult);
+
 
     });
