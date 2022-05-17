@@ -15,8 +15,8 @@ jQuery(document)
         function getBigram(word) {
             let result = [];
 
-            for (let i = 0; i < word.length - 1; i++) {
-                result.push(word[i] + word[i + 1]);
+            for (let j = 0; j < word.length - 1; j++) {
+                result.push(word[j] + word[j + 1]);
             }
 
             return result;
@@ -28,9 +28,9 @@ jQuery(document)
             const bigram1 = getBigram(word1), bigram2 = getBigram(word2);
             let similar = [];
 
-            for (let i = 0; i < bigram1.length; i++) {
-                if (bigram2.indexOf(bigram1[i]) > -1) {
-                    similar.push(bigram1[i]);
+            for (let j = 0; j < bigram1.length; j++) {
+                if (bigram2.indexOf(bigram1[j]) > -1) {
+                    similar.push(bigram1[j]);
                 }
             }
 
@@ -41,11 +41,11 @@ jQuery(document)
             let maxSimilarity = 0;
             let mostSimilar = word;
 
-            for (let i = 0; i < knownWords.length; i++) {
-                let similarity = getSimilarity(knownWords[i], word);
+            for (let j = 0; j < knownWords.length; j++) {
+                let similarity = getSimilarity(knownWords[j], word);
                 if (similarity > maxSimilarity) {
                     maxSimilarity = similarity;
-                    mostSimilar = knownWords[i];
+                    mostSimilar = knownWords[j];
                 }
             }
 
@@ -71,6 +71,9 @@ jQuery(document)
             }
         });
 
+
+
+
         /************************************************************************************************
          * CODIGO PUNTO 2
          ************************************************************************************************/
@@ -78,7 +81,7 @@ jQuery(document)
 
         // creamos un objeto  para operar la funcionalidad de inventario
         function InventoryList() {
-            
+
             var items = [];
 
             this.add = function (name) {
@@ -97,8 +100,8 @@ jQuery(document)
                     return;
                 }
                 if (items.includes(name)) {
-                    var i = items.indexOf(name);
-                    items.splice(i, 1);
+                    var j = items.indexOf(name);
+                    items.splice(j, 1);
                 }
             }
 
@@ -110,5 +113,41 @@ jQuery(document)
         var inventario = new InventoryList();
         inventario.add("camisas");
         console.info(inventario.getList());
+
+
+        
+        /************************************************************************************************
+         * CODIGO PUNTO 3
+         ************************************************************************************************/
+
+                    
+            //TODO
+            function counts(teamA, teamB) {
+
+                var arrResult = [];
+
+                for (var i = 0; i < teamB.length ; i++){
+
+                    var totalPartidos = 0;
+
+                    for (var j = 0; j < teamA.length ; j++){
+                    
+                        if(teamA[j] <= teamB[i]){
+
+                            totalPartidos ++;
+
+                        }
+                    }  
+                    
+                    arrResult.push(totalPartidos);
+                }
+
+                return arrResult;
+            }
+
+            let teamA = [2, 10, 5, 4, 8];
+            let teamB = [3, 1, 7, 8];
+            let result = counts(teamA, teamB);
+            console.log(result)
 
     });
